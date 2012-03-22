@@ -1,0 +1,6 @@
+; Hershel Robinson
+name = tcpdf
+description = Enables other modules to use tcpdf library.
+package = Other
+core = 6.x
+

@@ -1,0 +1,23 @@
+<?php
+// $Id: tcpdf.module 
+
+function tcpdf_create_pdf($module='tcpdf',$pdfclass='mypdf.php') {
+  $path = drupal_get_path('module', 'tcpdf');
+  require_once("$path/tcpdf/tcpdf.php");
+  $module_path = drupal_get_path('module', $module);
+  require_once($module_path . '/' . $pdfclass);
+  $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, TRUE);
+  $pdf->Open();
+  return $pdf;
+}
+
+/**
+ * Outputs a PDF file.
+ */
+function tcpdf_generate_file($pdf, $filename, $dest = 'I') {
+  $filename = strtr(strip_tags($filename), " .,?!&#", "_______");
+  print $pdf->Output($filename.'.pdf', $dest);
+  module_invoke_all('exit');
+  $pdf->Close();
+}
+
